@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>ChatGPT01</artifactId>
+    <artifactId>TodoList</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ChatGPT01</name>
     <description>ChatGPT01</description>
