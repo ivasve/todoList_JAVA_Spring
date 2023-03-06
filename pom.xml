@@ -11,8 +11,8 @@
     <groupId>com.example</groupId>
     <artifactId>TodoList</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ChatGPT01</name>
-    <description>ChatGPT01</description>
+    <name>TodoList</name>
+    <description>TodoList</description>
     <properties>
         <java.version>17</java.version>
     </properties>
