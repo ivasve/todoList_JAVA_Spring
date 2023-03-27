@@ -1,4 +1,4 @@
-package com.example.todoList;
+package com.unicorn.todoList;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;

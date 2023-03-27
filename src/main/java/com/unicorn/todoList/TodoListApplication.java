@@ -1,4 +1,4 @@
-package com.example.todoList;
+package com.unicorn.todoList;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
