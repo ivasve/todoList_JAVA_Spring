@@ -24,8 +24,8 @@ public class TodoListEntity {
     private Long id;
 
     @JsonProperty("text")
-    @NotBlank(message = "Title cannot be blank")
-    @Size(max = 100, message = "Title cannot be longer than 100 characters")
+    @NotBlank(message = "Text cannot be blank")
+    @Size(max = 100, message = "Text cannot be longer than 100 characters")
     @Column(name = "text")
     private String text;
 
