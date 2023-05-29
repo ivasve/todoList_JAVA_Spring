@@ -12,8 +12,15 @@ public class ToDoListService {
 
     public TodoListEntity updateTodoList(Long id, TodoListEntity todo){
         TodoListEntity findExistingTodo = todoListRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Todo not found"));
-//        TodoListEntity findExistingTodo = todoListRepository.findById(id).orElseThrow();
 //        findExistingTodo.setDate((todo.getDate()));
+
+        if (todo.getText() != null || !todo.getText().isEmpty()) {
+            findExistingTodo.setText(todo.getText());
+        }
+        if (todo.getDate() != null) {
+            findExistingTodo.setDate(todo.getDate());
+        }
+
         todoListRepository.save(findExistingTodo);
         return todoListRepository.save(findExistingTodo);
     }
@@ -28,7 +35,11 @@ public class ToDoListService {
 
     public void deleteTodoList(Long id){
         TodoListEntity todo = todoListRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Todo not found"));
-//        TodoListEntity todo = todoListRepository.findById(id).orElseThrow();
         todoListRepository.delete(todo);
+    }
+
+    public TodoListEntity returnTodoById(Long id) {
+        TodoListEntity todo = todoListRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Todo not found"));
+        return todo;
     }
 }
