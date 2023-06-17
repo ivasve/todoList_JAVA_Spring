@@ -2,7 +2,6 @@ package com.unicorn.todoList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,28 +27,28 @@ public class TodoListController {
     @Autowired
     private ToDoListService toDoListService;
 
+
     @GetMapping("/list")
-    public Iterable<TodoListEntity> findAll() {
+    public Iterable<TodoDTO> findAll() {
         return toDoListService.returnAllTodoList();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TodoListEntity getById(@PathVariable Long id){
+    public TodoDTO getById(@PathVariable Long id){
         return toDoListService.returnTodoById(id);
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public TodoListEntity create(@Validated @RequestBody TodoListEntity todo) {
-        return toDoListService.createTodoList(todo);
+    public TodoDTO create(@Valid @RequestBody TodoDTO todoDTO) {
+        return toDoListService.createTodoList(todoDTO);
     }
 
     @PutMapping("/{id}/update")
     @ResponseStatus(HttpStatus.OK)
-    public TodoListEntity update(@PathVariable Long id, @Validated @RequestBody TodoListEntity todo) {
-        toDoListService.updateTodoList(id, todo);
-        return toDoListService.updateTodoList(id, todo);
+    public TodoDTO update(@PathVariable Long id, @Valid @RequestBody TodoDTO todoDTO) {
+        return toDoListService.updateTodoList(id, todoDTO);
     }
 
     @DeleteMapping("/{id}/delete")
