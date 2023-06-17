@@ -4,33 +4,37 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.stream.Collectors;
+
 @Configuration
 public class ToDoListService {
 
     @Autowired
     private TodoListRepository todoListRepository;
 
-    public TodoListEntity updateTodoList(Long id, TodoListEntity todo){
-        TodoListEntity findExistingTodo = todoListRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Todo not found"));
-//        findExistingTodo.setDate((todo.getDate()));
 
-        if (todo.getText() != null || !todo.getText().isEmpty()) {
-            findExistingTodo.setText(todo.getText());
+    public TodoDTO updateTodoList(Long id, TodoDTO todoDTO) {
+        TodoListEntity entity = todoListRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Todo not found"));
+        if (todoDTO.getText() != null || !todoDTO.getText().isEmpty()) {
+           entity.setText(todoDTO.getText());
         }
-        if (todo.getDate() != null) {
-            findExistingTodo.setDate(todo.getDate());
+        if (todoDTO.getDate() != null) {
+            entity.setDate(todoDTO.getDate());
         }
-
-        todoListRepository.save(findExistingTodo);
-        return todoListRepository.save(findExistingTodo);
+        TodoListEntity updatedEntity = todoListRepository.save(entity);
+        return TodoDTO.fromEntity(updatedEntity);
     }
 
-    public TodoListEntity createTodoList(TodoListEntity todo) {
-        return todoListRepository.save(todo);
+
+    public TodoDTO createTodoList(TodoDTO todoDTO) {
+        TodoListEntity entity = todoDTO.toEntity();
+        entity = todoListRepository.save(entity);
+        return TodoDTO.fromEntity(entity);
     }
 
-    public Iterable<TodoListEntity> returnAllTodoList(){
-        return todoListRepository.findAll();
+    public Iterable<TodoDTO> returnAllTodoList(){
+        return todoListRepository.findAll().stream().map(TodoDTO::fromEntity).collect(Collectors.toList());
     }
 
     public void deleteTodoList(Long id){
@@ -38,8 +42,8 @@ public class ToDoListService {
         todoListRepository.delete(todo);
     }
 
-    public TodoListEntity returnTodoById(Long id) {
+    public TodoDTO returnTodoById(Long id) {
         TodoListEntity todo = todoListRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Todo not found"));
-        return todo;
+        return TodoDTO.fromEntity(todo);
     }
 }
